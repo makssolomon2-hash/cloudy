@@ -27,41 +27,41 @@ export function ChatRail({ activeView = 'chats', currentUser, onNavChange, onSig
   }
 
   return (
-    <aside className="rail glass-panel">
-      <button type="button" className="brand-mark" onClick={() => onNavChange?.('dashboard')} aria-label="Dashboard">
-        <span className="mark-cloud"><Icon name="cloud" /></span>
-        <span className="brand-text">Cloudy</span>
+    <aside className="glass-panel flex w-rail flex-col items-center justify-between gap-0 px-2.5 pt-3.5 pb-3">
+      <button type="button" className="flex flex-col items-center gap-1 pb-4 text-white" onClick={() => onNavChange?.('dashboard')} aria-label="Dashboard">
+        <span className="text-cyan"><Icon name="cloud" size={28} /></span>
+        <span className="font-display text-[9px] font-bold tracking-[0.12em] text-muted uppercase">Cloudy</span>
       </button>
 
-      <nav className="rail-nav" aria-label="Sidebar navigation">
+      <nav className="flex flex-1 flex-col items-center gap-1 pt-1" aria-label="Sidebar navigation">
         {NAV_ITEMS.map((item) => {
           const isActive = activeView === item.id
           return (
             <button
               key={item.id}
               type="button"
-              className={`rail-item${isActive ? ' active' : ''}`}
+              className={`flex h-12 w-12 items-center justify-center rounded-md border transition-colors ${isActive ? 'border-cyan/18 bg-cyan/10 text-cyan shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]' : 'border-transparent text-muted'}`}
               aria-label={item.label}
               onClick={() => onNavChange?.(item.id)}
               onMouseEnter={(e) => handleEnter(e.currentTarget, isActive)}
               onMouseLeave={(e) => handleLeave(e.currentTarget, isActive)}
             >
-              <Icon name={item.icon} />
+              <Icon name={item.icon} size={18} />
             </button>
           )
         })}
       </nav>
 
-      <div className="user-card">
+      <div className="flex w-full flex-col items-center gap-2 border-t border-white/6 pt-3.5">
         <Avatar userId="mike" name={name} src={currentUser?.imageUrl} size="sm" online />
-        <div className="user-card-meta">
-          <div className="user-status">
-            <span className="status-dot" />
+        <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1 text-[9px] text-cyan">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan" />
             <span>Online</span>
           </div>
           {onSignOut && (
-            <button type="button" className="rail-signout" aria-label="Sign out" onClick={onSignOut}>
-              <Icon name="logOut" />
+            <button type="button" className="grid h-6 w-6 place-items-center rounded-sm text-muted transition-colors hover:text-danger" aria-label="Sign out" onClick={onSignOut}>
+              <Icon name="logOut" size={13} />
             </button>
           )}
         </div>

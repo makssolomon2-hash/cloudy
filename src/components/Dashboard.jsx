@@ -56,104 +56,102 @@ export function Dashboard({ onNotify }) {
   const now = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })
 
   return (
-    <div className="dashboard-wrap" ref={wrapRef}>
-      <div className="dash-header glass-panel dash-card">
+    <div className="grid gap-2.5 pb-3" ref={wrapRef}>
+      <div className="dash-card glass-panel flex items-center justify-between gap-5 p-5.5">
         <div>
-          <h2 className="dash-greeting">Good morning, Mike</h2>
-          <p className="dash-date">{now}</p>
+          <h2 className="font-display text-2xl font-bold tracking-tight text-white">Good morning, Mike</h2>
+          <p className="mt-1 text-[13px] text-muted">{now}</p>
         </div>
-        <div className="dash-header-actions">
-          <div className="dash-status-pill">
-            <span className="pulse-dot" />
-            All systems operational
-          </div>
+        <div className="flex items-center gap-2 rounded-full border border-cyan/15 bg-cyan/6 px-2.5 py-2 text-[11px] text-cyan">
+          <span className="h-1.5 w-1.5 rounded-full bg-cyan shadow-[0_0_0_5px_rgba(0,229,255,0.12)]" />
+          All systems operational
         </div>
       </div>
 
-      <div className="dash-stats">
+      <div className="grid grid-cols-2 gap-2.5">
         {[
           { label: 'Messages today',  value: '1,284', delta: '+12%',  positive: true  },
           { label: 'Active users',    value: '47',    delta: '+3',    positive: true  },
           { label: 'Avg response',    value: '1.4s',  delta: '-0.2s', positive: true  },
           { label: 'Open calls',      value: '2',     delta: '+1',    positive: false },
         ].map(stat => (
-          <div key={stat.label} className="stat-card glass-panel dash-card">
-            <div className="stat-value">{stat.value}</div>
-            <div className="stat-label">{stat.label}</div>
-            <div className={`stat-delta ${stat.positive ? 'positive' : 'negative'}`}>{stat.delta}</div>
+          <div key={stat.label} className="dash-card glass-panel relative p-4.5">
+            <div className="font-display text-[28px] font-bold text-white">{stat.value}</div>
+            <div className="mt-1 text-xs text-muted">{stat.label}</div>
+            <div className="absolute top-4.5 right-4.5 text-[11px] font-bold text-cyan">{stat.delta}</div>
           </div>
         ))}
       </div>
 
-      <div className="dash-row">
-        <div className="storage-ring-card glass-panel dash-card">
-          <h4>Cloud Storage</h4>
-          <div className="ring-wrap">
-            <svg width="130" height="130" viewBox="0 0 130 130">
+      <div className="grid gap-2.5">
+        <div className="dash-card glass-panel p-4.5">
+          <h4 className="font-display text-[13px] font-bold text-white">Cloud Storage</h4>
+          <div className="relative my-3.5 grid place-items-center">
+            <svg width="130" height="130" viewBox="0 0 130 130" className="[grid-area:1/1]">
               <circle cx="65" cy="65" r="54" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="8" />
               <circle
                 ref={ringRef}
                 cx="65" cy="65" r="54"
                 fill="none"
-                stroke="var(--cyan)"
+                stroke="var(--color-cyan)"
                 strokeWidth="8"
                 strokeLinecap="round"
                 transform="rotate(-90 65 65)"
                 style={{ filter: 'drop-shadow(0 0 8px rgba(0,229,255,0.5))' }}
               />
             </svg>
-            <div className="ring-label">
-              <span className="ring-pct">10%</span>
-              <span className="ring-sub">used</span>
+            <div className="grid place-items-center text-center [grid-area:1/1]">
+              <span className="font-display text-2xl font-bold text-white">68%</span>
+              <span className="text-[11px] text-muted">used</span>
             </div>
           </div>
-          <div className="ring-detail">
-            <span className="ring-used">6.8 GB</span>
-            <span className="ring-total">of 10 GB</span>
+          <div className="flex justify-center gap-1.5">
+            <span className="text-[13px] font-bold text-cyan">6.8 GB</span>
+            <span className="text-[11px] text-muted">of 10 GB</span>
           </div>
         </div>
 
-        <div className="now-playing-card glass-panel dash-card">
-          <div className="np-header">
-            <h4>Now Playing</h4>
-            <span className="np-live">LIVE</span>
+        <div className="dash-card glass-panel p-4.5">
+          <div className="flex items-center justify-between">
+            <h4 className="font-display text-[13px] font-bold text-white">Now Playing</h4>
+            <span className="rounded-full bg-cyan/10 px-1.5 py-0.5 text-[9px] font-bold text-cyan">LIVE</span>
           </div>
-          <div className="np-info">
-            <div className="np-thumb" />
+          <div className="my-4 flex items-center gap-2.5">
+            <div className="h-10.5 w-10.5 rounded-sm border border-cyan/28 bg-[radial-gradient(circle_at_70%_30%,rgba(0,229,255,0.75),transparent_34%)] bg-cyan/6" />
             <div>
-              <div className="np-title">new_track.wav</div>
-              <div className="np-artist">SLMN Studio · Sound Engineer</div>
+              <div className="text-[13px] font-bold text-white">new_track.wav</div>
+              <div className="mt-0.5 text-[11px] text-muted">SLMN Studio · Sound Engineer</div>
             </div>
           </div>
-          <div className="waveform" ref={waveRef}>
+          <div className="my-1 mb-3.5 flex h-10.5 items-center gap-0.5 overflow-hidden" ref={waveRef}>
             {WAVEFORM.map((h, i) => (
-              <div key={i} className="wf-bar" style={{ height: h * 2 + 'px' }} />
+              <div key={i} className="wf-bar min-w-0.5 max-w-1.25 flex-1 origin-center rounded-full bg-gradient-to-b from-cyan to-cyan-deep" style={{ height: h * 2 + 'px' }} />
             ))}
           </div>
-          <div className="np-controls">
-            <button type="button" className="np-btn" aria-label="Previous track" onClick={() => onNotify?.('Previous track selected')}><Icon name="arrowLeft" /></button>
-            <button type="button" className="np-play" aria-label={isPlaying ? 'Pause track' : 'Play track'} onClick={() => setIsPlaying((playing) => !playing)}><Icon name={isPlaying ? 'pause' : 'play'} /></button>
-            <button type="button" className="np-btn" aria-label="Next track" onClick={() => onNotify?.('Next track selected')}><Icon name="arrowRight" /></button>
-            <span className="np-time">2:41 / 4:18</span>
+          <div className="flex items-center justify-center gap-3.25">
+            <button type="button" className="grid place-items-center text-muted" aria-label="Previous track" onClick={() => onNotify?.('Previous track selected')}><Icon name="arrowLeft" size={18} /></button>
+            <button type="button" className="grid h-9 w-9 place-items-center rounded-full bg-cyan text-cyan-ink shadow-glow" aria-label={isPlaying ? 'Pause track' : 'Play track'} onClick={() => setIsPlaying((playing) => !playing)}><Icon name={isPlaying ? 'pause' : 'play'} size={17} /></button>
+            <button type="button" className="grid place-items-center text-muted" aria-label="Next track" onClick={() => onNotify?.('Next track selected')}><Icon name="arrowRight" size={18} /></button>
+            <span className="ml-auto text-[10px] text-muted">2:41 / 4:18</span>
           </div>
         </div>
 
-        <div className="active-users-card glass-panel dash-card">
-          <h4>Active Users <span className="au-count">{ACTIVE_USERS.length + 12}</span></h4>
-          <div className="au-stack">
+        <div className="dash-card glass-panel p-4.5">
+          <h4 className="font-display text-[13px] font-bold text-white">Active Users <span className="text-cyan">{ACTIVE_USERS.length + 12}</span></h4>
+          <div className="relative my-4.25 h-11.5">
             {ACTIVE_USERS.map((user, i) => (
-              <div key={user.id} className="au-avatar" style={{ zIndex: ACTIVE_USERS.length - i, left: i * 22 }}>
+              <div key={user.id} className="absolute top-0 [&_.av]:border-2 [&_.av]:border-bg-1" style={{ zIndex: ACTIVE_USERS.length - i, left: i * 22 }}>
                 <Avatar userId={user.id} name={user.name} size="sm" />
               </div>
             ))}
-            <div className="au-more" style={{ left: ACTIVE_USERS.length * 22 }}>+12</div>
+            <div className="absolute top-0 grid h-10 w-10 place-items-center rounded-full border-2 border-bg-1 bg-cyan text-[10px] font-bold text-cyan-ink" style={{ left: ACTIVE_USERS.length * 22 }}>+12</div>
           </div>
-          <div className="au-list">
+          <div className="grid gap-2.25">
             {ACTIVE_USERS.map(user => (
-              <div key={user.id} className="au-row">
+              <div key={user.id} className="flex items-center gap-2 text-xs text-white">
                 <Avatar userId={user.id} name={user.name} size="xs" online />
                 <span>{user.name}</span>
-                <span className="au-status">Online</span>
+                <span className="ml-auto text-[10px] text-cyan">Online</span>
               </div>
             ))}
           </div>

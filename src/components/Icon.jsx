@@ -1,10 +1,10 @@
-export function Icon({ name, className = '' }) {
-  const common = { stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round', fill: 'none', className }
+export function Icon({ name, size = 16, className = '' }) {
+  const common = { stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round', fill: 'none' }
 
   const icons = {
     cloud: (
       <svg viewBox="0 0 24 24" {...common}>
-        <path d="M7 18.5a4 4 0 0 1-.7-7.95A5.5 5.5 0 0 1 17.83 13a3.7 3.7 0 1 1 0 7.5H7Z" />
+        <path d="M7 18H16.4A3.6 3.6 0 0 0 17 10.83 5.5 5.5 0 0 0 6.33 9.4 4 4 0 0 0 7 18Z" />
       </svg>
     ),
     chat: (
@@ -37,12 +37,17 @@ export function Icon({ name, className = '' }) {
         <path d="M7 5.5h10a1.5 1.5 0 0 1 1.5 1.5v12L12 17l-6.5 2V7A1.5 1.5 0 0 1 7 5.5Z" />
       </svg>
     ),
-    gear: (
+   
+   gear: (
       <svg viewBox="0 0 24 24" {...common}>
-        <circle cx="12" cy="12" r="3.5" />
-        <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.85l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .68 1.7 1.7 0 0 0-.2 1.16l.04.33a2 2 0 1 1-3.86.89l-.03-.33A1.7 1.7 0 0 0 9.3 20a1.7 1.7 0 0 0-1.5.9l-.06.1a2 2 0 1 1-3.46-2l.1-.1a1.7 1.7 0 0 0 .9-1.5 1.7 1.7 0 0 0-.66-1.31l-.27-.2a2 2 0 1 1 2.24-3.23l.2.27A1.7 1.7 0 0 0 8.7 12a1.7 1.7 0 0 0 .3-1.15l-.06-.32a2 2 0 1 1 3.86-.9l.03.33c.1.4.4.74.8.95.4.2.86.22 1.3.12l.32-.08a2 2 0 1 1 .9 3.87l-.33.03A1.7 1.7 0 0 0 15 15.3c-.4.2-.86.24-1.31.16l-.27-.08A1.7 1.7 0 0 0 12 15.7Z" />
+        <path
+          fillRule="evenodd"
+          d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 5.99c-.52.15-1.014.36-1.474.62l-1.96-.8c-.87-.355-1.85.08-2.24.91l-1.25 2.65c-.39.83.08 1.82.91 2.24l1.96.8c-.02.26-.03.52-.03.79s.01.53.03.79l-1.96.8c-.83.42-1.3 1.41-.91 2.24l1.25 2.65c.39.83 1.37 1.265 2.24.91l1.96-.8c.46.26.954.47 1.474.62l.178 2.173c.151.904.933 1.567 1.85 1.567h2.844c.917 0 1.699-.663 1.85-1.567l.178-2.173c.52-.15 1.014-.36 1.474-.62l1.96.8c.87.355 1.85-.08 2.24-.91l1.25-2.65c.39-.83-.08-1.82-.91-2.24l-1.96-.8c.02-.26.03-.52.03-.79s-.01-.53-.03-.79l1.96-.8c.83-.42 1.3-1.41.91-2.24l-1.25-2.65c-.39-.83-1.37-1.265-2.24-.91l-1.96.8c-.46-.26-.954-.47-1.474-.62L15.772 3.817c-.151-.904-.933-1.567-1.85-1.567h-2.844ZM12 15.75a3.75 3.75 0 1 0 0-7.5 3.75 3.75 0 0 0 0 7.5Z"
+          clipRule="evenodd"
+        />
       </svg>
     ),
+
     search: (
       <svg viewBox="0 0 24 24" {...common}>
         <circle cx="11" cy="11" r="5.5" />
@@ -139,7 +144,17 @@ export function Icon({ name, className = '' }) {
         <path d="m9 18 6-6-6-6" />
       </svg>
     ),
+    check: (
+      <svg viewBox="0 0 24 24" {...common}><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>
+    ),
   }
 
-  return <span className={`icon ${className}`}>{icons[name] || icons.chat}</span>
+  return (
+    <span
+      className={`inline-flex shrink-0 items-center justify-center align-middle [&>svg]:h-full [&>svg]:w-full ${className}`}
+      style={{ width: size, height: size }}
+    >
+      {icons[name] || icons.chat}
+    </span>
+  )
 }

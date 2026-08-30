@@ -788,3 +788,32 @@ A feature is done when:
 7. Ukrainian and English both fit the layout.
 
 If you have to choose between another feature and a more beautiful shell — **beautify the shell**. That is the assignment.
+
+---
+
+## 18. Cloud Chat & Storage (messenger core)
+
+The logo (`ChatRail` brand mark) opens the **Dashboard** view. Dashboard is not a full-screen replacement for chat — it is a split screen:
+
+- **Left half** — `Dashboard` stats (messages, active users, storage ring, now playing).
+- **Right half** — a live, compact messenger (`ChatList` + `Conversation`, same state as the main Chats view) so the user can keep chatting while looking at metrics.
+- On mobile (`<768px`) the split collapses to Dashboard only. The user already has a dedicated Chats tab in the bottom nav, so duplicating the full messenger there would be redundant, not additive.
+- Implementation: `DashboardView.jsx` wraps `Dashboard` + `ChatList` + `Conversation`, driven by the same `useCloudyMessenger` state as the Chats view. Do not fork a second copy of the message state for this screen.
+
+### Saved Messages (self-chat / personal cloud)
+
+Every account has a pinned `Saved Messages` thread (`thread.isSelf === true`, id `'me'`). This is the "text yourself" pattern from Telegram/WhatsApp, repurposed as **Cloudy's personal cloud storage**: notes, links, and files a user saves for themselves.
+
+- Every message sent in this thread is rendered as a sent (`me`) bubble — there is no "other" participant.
+- Visual identity stays **cyan-only** per §2. Do not invent a new accent color for this thread. The distinction is iconographic: the avatar renders the cloud glyph on a solid cyan disc instead of a photo, and copy reads "Only visible to you" / "Save a note to your cloud..." instead of online/away status.
+- Call, video, mute, and Block User controls are hidden for this thread (there is no one to call or block).
+- Do not let a user delete or block their own Saved Messages thread.
+
+### Groups: create, name, share
+
+Group creation is a first-class action, not an afterthought:
+
+- The chat list's **New chat** button (`+`) opens a popover with two paths: message an existing contact directly, or **Create a group**.
+- Creating a group opens `GroupCreateModal`: name the group, multi-select members from contacts, "Create & share". This mirrors AGENTS §6's Modal spec (dim + blur backdrop, glass card, GSAP scale/fade, ESC to close).
+- On submit, the group becomes a real thread (`thread.group === true`, `thread.members`) with a system message confirming who it was shared with, and the app navigates straight into it.
+- Group avatars stay the existing 2×2 `GroupAvatar` mosaic — do not add a separate group-icon system.
